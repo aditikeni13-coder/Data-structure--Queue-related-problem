@@ -1,0 +1,104 @@
+class Queue {
+    
+    // Node class
+    class Node {
+        int data;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    Node front = null;
+    Node rear = null;
+
+    // Add element to the queue
+    void enqueue(int data) {
+        Node newNode = new Node(data);
+
+        // If queue is empty
+        if (rear == null) {
+            front = rear = newNode;
+            return;
+        }
+
+        // Add new node at the rear
+        rear.next = newNode;
+        rear = newNode;
+    }
+
+    // Remove element from the queue
+    int dequeue() {
+        // If queue is empty
+        if (front == null) {
+            System.out.println("Queue is empty");
+            return -1;
+        }
+
+        int data = front.data;
+
+        // Move front to the next node
+        front = front.next;
+
+        // If queue becomes empty
+        if (front == null) {
+            rear = null;
+        }
+
+        return data;
+    }
+
+    // Get the front element
+    int peek() {
+        if (front == null) {
+            System.out.println("Queue is empty");
+            return -1;
+        }
+
+        return front.data;
+    }
+
+    // Check if queue is empty
+    boolean isEmpty() {
+        return front == null;
+    }
+
+    // Display queue
+    void display() {
+        if (front == null) {
+            System.out.println("Queue is empty");
+            return;
+        }
+
+        Node temp = front;
+
+        while (temp != null) {
+            System.out.print(temp.data + " ");
+            temp = temp.next;
+        }
+
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        Queue q = new Queue();
+
+        q.enqueue(10);
+        q.enqueue(20);
+        q.enqueue(30);
+        q.enqueue(40);
+
+        System.out.println("Queue:");
+        q.display();
+
+        System.out.println("Dequeued: " + q.dequeue());
+        System.out.println("Dequeued: " + q.dequeue());
+
+        System.out.println("Front element: " + q.peek());
+
+        System.out.println("Queue after dequeue:");
+        q.display();
+    }
+}
