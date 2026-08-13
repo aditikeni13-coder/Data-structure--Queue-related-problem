@@ -1,0 +1,99 @@
+class Queue {
+    int[] arr;
+    int front;
+    int rear;
+    int size;
+    int capacity;
+
+    // Constructor
+    Queue(int capacity) {
+        this.capacity = capacity;
+        arr = new int[capacity];
+        front = 0;
+        rear = -1;
+        size = 0;
+    }
+
+    // Add element to queue
+    void enqueue(int data) {
+        if (isFull()) {
+            System.out.println("Queue is full");
+            return;
+        }
+
+        rear++;
+        arr[rear] = data;
+        size++;
+
+        System.out.println(data + " inserted");
+    }
+
+    // Remove element from queue
+    int dequeue() {
+        if (isEmpty()) {
+            System.out.println("Queue is empty");
+            return -1;
+        }
+
+        int data = arr[front];
+        front++;
+        size--;
+
+        return data;
+    }
+
+    // Get front element
+    int peek() {
+        if (isEmpty()) {
+            System.out.println("Queue is empty");
+            return -1;
+        }
+
+        return arr[front];
+    }
+
+    // Check if queue is empty
+    boolean isEmpty() {
+        return size == 0;
+    }
+
+    // Check if queue is full
+    boolean isFull() {
+        return size == capacity;
+    }
+
+    // Display queue
+    void display() {
+        if (isEmpty()) {
+            System.out.println("Queue is empty");
+            return;
+        }
+
+        for (int i = front; i <= rear; i++) {
+            System.out.print(arr[i] + " ");
+        }
+
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+
+        Queue q = new Queue(5);
+
+        q.enqueue(10);
+        q.enqueue(20);
+        q.enqueue(30);
+        q.enqueue(40);
+
+        System.out.println("Queue:");
+        q.display();
+
+        System.out.println("Dequeued: " + q.dequeue());
+        System.out.println("Dequeued: " + q.dequeue());
+
+        System.out.println("Front element: " + q.peek());
+
+        System.out.println("Queue after dequeue:");
+        q.display();
+    }
+}
