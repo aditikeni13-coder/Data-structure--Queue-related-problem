@@ -1,0 +1,87 @@
+import java.util.*;
+
+class LRUCache {
+
+    private int capacity;
+
+    // Queue stores keys in order of usage
+    private Queue<Integer> queue;
+
+    // Map stores key-value pairs
+    private Map<Integer, Integer> map;
+
+    LRUCache(int capacity) {
+        this.capacity = capacity;
+        queue = new LinkedList<>();
+        map = new HashMap<>();
+    }
+
+    // Get value of key
+    public int get(int key) {
+
+        if (!map.containsKey(key)) {
+            return -1;
+        }
+
+        // Remove key from its old position
+        queue.remove(key);
+
+        // Add it at the end because it is recently used
+        queue.add(key);
+
+        return map.get(key);
+    }
+
+    // Insert or update key-value
+    public void put(int key, int value) {
+
+        // If key already exists
+        if (map.containsKey(key)) {
+            queue.remove(key);
+        }
+
+        // Add/update value
+        map.put(key, value);
+
+        // Mark key as recently used
+        queue.add(key);
+
+        // If capacity is exceeded
+        if (queue.size() > capacity) {
+
+            // Remove least recently used key
+            int leastUsed = queue.poll();
+
+            // Remove it from map
+            map.remove(leastUsed);
+        }
+    }
+
+    public void display() {
+
+        System.out.println("Cache: " + queue);
+        System.out.println("Map: " + map);
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        LRUCache cache = new LRUCache(3);
+
+        cache.put(1, 10);
+        cache.put(2, 20);
+        cache.put(3, 30);
+
+        cache.display();
+
+        System.out.println("Get 1: " + cache.get(1));
+
+        cache.display();
+
+        cache.put(4, 40);
+
+        cache.display();
+    }
+}
